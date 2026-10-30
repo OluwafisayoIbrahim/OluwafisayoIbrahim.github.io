@@ -1,0 +1,296 @@
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+
+:root {
+  color-scheme: light;
+
+  /* Brand palette */
+  --canvas: #f8f7f4;
+  --ink: #172338;
+  --slate: #52677f;
+  --editorial-blue: #3b72cc;
+  --sage: #dce8de;
+  --surface: #f0f1ee;
+  --divider: #dee1df;
+
+  /* shadcn semantic colours */
+  --background: #f8f7f4;
+  --foreground: #172338;
+
+  --card: #ffffff;
+  --card-foreground: #172338;
+
+  --popover: #ffffff;
+  --popover-foreground: #172338;
+
+  --primary: #172338;
+  --primary-foreground: #ffffff;
+
+  --secondary: #f0f1ee;
+  --secondary-foreground: #172338;
+
+  --muted: #f0f1ee;
+  --muted-foreground: #52677f;
+
+  --accent: #dce8de;
+  --accent-foreground: #172338;
+
+  --destructive: #c94c4c;
+
+  --border: #dee1df;
+  --input: #dee1df;
+  --ring: #3b72cc;
+
+  /* Sera-inspired restrained geometry */
+  --radius: 0.375rem;
+
+  /* Chart palette */
+  --chart-1: #3b72cc;
+  --chart-2: #52677f;
+  --chart-3: #88a996;
+  --chart-4: #b6a17a;
+  --chart-5: #837ba5;
+}
+
+/* ==========================================================
+   DARK MODE
+   ========================================================== */
+
+.dark {
+  color-scheme: dark;
+
+  --canvas: #111923;
+  --ink: #f2f1ec;
+  --slate: #acb8c7;
+  --editorial-blue: #86b5ff;
+  --sage: #2b403b;
+  --surface: #1b2734;
+  --divider: #344150;
+
+  --background: #111923;
+  --foreground: #f2f1ec;
+
+  --card: #1b2734;
+  --card-foreground: #f2f1ec;
+
+  --popover: #1b2734;
+  --popover-foreground: #f2f1ec;
+
+  --primary: #f2f1ec;
+  --primary-foreground: #111923;
+
+  --secondary: #253443;
+  --secondary-foreground: #f2f1ec;
+
+  --muted: #253443;
+  --muted-foreground: #acb8c7;
+
+  --accent: #2b403b;
+  --accent-foreground: #f2f1ec;
+
+  --destructive: #ed7373;
+
+  --border: #344150;
+  --input: #344150;
+  --ring: #86b5ff;
+
+  --chart-1: #86b5ff;
+  --chart-2: #acb8c7;
+  --chart-3: #99bfae;
+  --chart-4: #dfbe82;
+  --chart-5: #b4a5df;
+}
+
+/* ==========================================================
+   TAILWIND V4 TOKENS
+   ========================================================== */
+
+@theme inline {
+  /* shadcn tokens */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Custom editorial utilities */
+  --color-canvas: var(--canvas);
+  --color-ink: var(--ink);
+  --color-slate: var(--slate);
+  --color-editorial-blue: var(--editorial-blue);
+  --color-sage: var(--sage);
+  --color-surface: var(--surface);
+  --color-divider: var(--divider);
+
+  /* Fonts from next/font in layout.tsx */
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-newsreader);
+  --font-mono: var(--font-jetbrains-mono);
+
+  /* Radii */
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 6px);
+
+  /* Charts */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+}
+
+/* ==========================================================
+   BASE STYLES
+   ========================================================== */
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    @apply min-h-screen bg-background text-foreground;
+    font-family: var(--font-inter), sans-serif;
+    font-synthesis: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: var(--sage);
+    color: var(--ink);
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--editorial-blue);
+    outline-offset: 3px;
+  }
+}
+
+/* ==========================================================
+   EDITORIAL TYPOGRAPHY
+   ========================================================== */
+
+@layer components {
+  .editorial-heading {
+    font-family: var(--font-newsreader), Georgia, serif;
+    font-weight: 400;
+    letter-spacing: -0.035em;
+    line-height: 1.12;
+    text-wrap: balance;
+  }
+
+  .editorial-body {
+    font-family: var(--font-inter), sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--muted-foreground);
+  }
+
+  .editorial-label {
+    font-family: var(--font-jetbrains-mono), monospace;
+    font-size: 0.6875rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    line-height: 1.6;
+    text-transform: uppercase;
+  }
+
+  .editorial-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--editorial-blue);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+
+  .editorial-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .editorial-rule {
+    height: 1px;
+    width: 100%;
+    background: var(--border);
+  }
+
+  .page-container {
+    width: min(100% - 3rem, 73.75rem);
+    margin-inline: auto;
+  }
+
+  .section-spacing {
+    padding-block: clamp(5rem, 9vw, 10rem);
+  }
+}
+
+/* ==========================================================
+   RESPONSIVE AND ACCESSIBILITY
+   ========================================================== */
+
+@media (max-width: 640px) {
+  .page-container {
+    width: calc(100% - 2.5rem);
+  }
+
+  .editorial-body {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
