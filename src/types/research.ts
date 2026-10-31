@@ -26,6 +26,7 @@ export interface ResearchProject {
   title: string;
   summary: string;
   topics: readonly string[];
+  tools: readonly string[];
   featured?: boolean;
   figure?: ImageAsset;
   sections: readonly ContentSection[];

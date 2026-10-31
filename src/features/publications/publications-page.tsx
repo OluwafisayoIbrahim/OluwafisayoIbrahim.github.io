@@ -4,11 +4,12 @@ import { publications } from "@/content/publications";
 
 export function PublicationsPage() {
   return (
-    <>
+    <div className="page-container research-editorial">
       <PageHeading title="Publications" />
       {publications.map((item) => (
         <PublicationItem key={item.id} publication={item} />
       ))}
-    </>
+    </div>
   );
 }
+
