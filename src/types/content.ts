@@ -7,6 +7,7 @@ export interface ImageAsset {
   src: string;
   alt: string;
   caption?: string;
+  aspectRatio?: string;
 }
 
 export interface ContentSection {

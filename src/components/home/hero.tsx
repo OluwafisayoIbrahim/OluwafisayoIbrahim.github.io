@@ -11,23 +11,38 @@ import EmailIcon from "../shared/icons/Email";
 type HeroLink = {
   icon: ReactNode;
   href: string;
+  label: string;
 };
 
 export function Hero() {
   const heroLinks: HeroLink[] = [
     {
       href: "https://scholar.google.com/citations?user=-x9WG8sAAAAJ&hl=en",
+      label: "Google Scholar profile",
       icon: <GoogleScholarIcon className="w-9 h-9" />,
     },
     {
       href: "https://github.com/OluwafisayoIbrahim",
+      label: "GitHub profile",
       icon: <GitHubIcon className="w-9 h-9" />,
     },
-    { href: "https://orcid.org/0009-0006-2625-0675", icon: <ORCiDIcon className="w-9 h-9" /> },
-    { href: "https://www.linkedin.com/in/oluwafisayo-ibrahim/", icon: <LinkedInIcon className="w-9 h-9" /> },
-    { href: "mailto:oluwafisayoibrahim2@gmail.com", icon: <EmailIcon className="w-9 h-9" /> },
+    {
+      label: "ORCID profile",
+      href: "https://orcid.org/0009-0006-2625-0675",
+      icon: <ORCiDIcon className="w-9 h-9" />,
+    },
+    {
+      label: "LinkedIn profile",
+      href: "https://www.linkedin.com/in/oluwafisayo-ibrahim/",
+      icon: <LinkedInIcon className="w-9 h-9" />,
+    },
+    {
+      label: "Email Oluwafisayo Ibrahim",
+      href: "mailto:oluwafisayoibrahim2@gmail.com",
+      icon: <EmailIcon className="w-9 h-9" />,
+    },
     ...(siteInformation.cvHref
-      ? [{ href: siteInformation.cvHref, icon: "↗" }]
+      ? [{ label: "View academic CV", href: siteInformation.cvHref, icon: "↗" }]
       : []),
   ];
 
@@ -43,37 +58,22 @@ export function Hero() {
           Oluwafisayo.
         </h1>
         <p className="text-[20px] leading-[170%] tracking-[0%] font-normal text-[#52677F] mt-8">
-          I’m a software engineer with a Bachelor&apos;s degree in Electrical and
-          Electronics Engineering, interested in research at the intersection of
-          software engineering and machine learning.
+          I’m a software engineer with a Bachelor&apos;s degree in Electrical
+          and Electronics Engineering, interested in research at the
+          intersection of software engineering and machine learning.
         </p>
         <div className="home-hero-actions">
-          {heroLinks.map((link, index) => {
-            const label =
-              link.href === "/research/"
-                ? "Explore my research"
-                : "View academic CV";
-
-            return link.href.startsWith("/") ? (
-              <Link
-                aria-label={label}
-                className="editorial-link"
-                href={link.href}
-                key={`${link.href}-${index}`}
-              >
-                <span aria-hidden="true">{link.icon}</span>
-              </Link>
-            ) : (
-              <Link
-                aria-label={label}
-                className="editorial-link"
-                href={link.href}
-                key={`${link.href}-${index}`}
-              >
-                <span aria-hidden="true">{link.icon}</span>
-              </Link>
-            );
-          })}
+          {heroLinks.map((link) => (
+            <Link
+              aria-label={link.label}
+              title={link.label}
+              className="editorial-link"
+              href={link.href}
+              key={link.href}
+            >
+              <span aria-hidden="true">{link.icon}</span>
+            </Link>
+          ))}
         </div>
         {siteInformation.profiles.length > 0 ? (
           <ul className="home-profile-links" aria-label="Professional profiles">
@@ -112,4 +112,3 @@ export function Hero() {
     </section>
   );
 }
-

@@ -1,3 +1,12 @@
+export type WorldContinent =
+  | "North America"
+  | "South America"
+  | "Africa"
+  | "Asia"
+  | "Europe"
+  | "Australia"
+  | "Antarctica";
+
 export interface WorldCity {
   id: string;
   name: string;
@@ -11,6 +20,7 @@ export interface WorldCity {
   zone: string;
 }
 export interface WorldCountry {
+  continent: WorldContinent;
   code: string;
   name: string;
   capital: string;

@@ -6,7 +6,7 @@ export function EducationalProjects() {
     <div id="educational-projects" className="education-project-link">
       <p className="editorial-label">Educational project</p>
       <Link className="editorial-link" href="/projects/c-caution/">
-        C-Caution Safety System <span aria-hidden="true">↗</span>
+        C-Caution Safety Sign <span aria-hidden="true">↗</span>
       </Link>
     </div>
   );

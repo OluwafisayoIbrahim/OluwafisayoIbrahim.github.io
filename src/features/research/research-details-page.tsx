@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ResearchFigure } from "@/components/research/research-figure";
 import { ProjectTools } from "@/components/projects/project-tools";
 import type { Publication } from "@/types/publication";
 import type { ResearchProject } from "@/types/research";
@@ -16,11 +17,14 @@ export function ResearchDetailsPage({
       <Link className="editorial-link" href="/#selected-research">
         ← Selected research
       </Link>
+      <div className={`research-detail-intro${research.figure ? " has-figure" : ""}`}>
       <header className="research-detail-header">
         <p className="editorial-label">{research.topics.join(" / ")}</p>
         <h1>{research.title}</h1>
         <p className="research-detail-summary">{research.summary}</p>
       </header>
+      {research.figure && <ResearchFigure image={research.figure} />}
+      </div>
       <div className="research-detail-body">
         {research.sections.map((section, index) => (
           <section
