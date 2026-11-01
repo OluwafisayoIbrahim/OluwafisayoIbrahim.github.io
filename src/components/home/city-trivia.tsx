@@ -9,10 +9,12 @@ import type { WorldCity } from "@/types/world";
 
 export function CityTrivia({ city }: { city: WorldCity }) {
   const [fact, setFact] = useState<CityStory | null | undefined>(undefined);
+  const [failed, setFailed] = useState(false);
+  const [attempt, setAttempt] = useState(0);
   useEffect(() => {
     const controller = new AbortController();
     let active = true;
-    const timeout = setTimeout(() => controller.abort(), 10000);
+    const timeout = setTimeout(() => controller.abort(), 30000);
     async function choose() {
       try {
         const facts =
@@ -35,7 +37,12 @@ export function CityTrivia({ city }: { city: WorldCity }) {
         } catch {}
         setFact(next);
       } catch {
-        if (active) setFact(null);
+        if (active) {
+          setFailed(true);
+          setFact(null);
+        }
+      } finally {
+        clearTimeout(timeout);
       }
     }
     void choose();
@@ -44,11 +51,11 @@ export function CityTrivia({ city }: { city: WorldCity }) {
       clearTimeout(timeout);
       controller.abort();
     };
-  }, [city]);
+  }, [city, attempt]);
   return (
     <div className="hello-facts">
       <h4 className="editorial-label">Fun fact about {city.name}</h4>
-      <div aria-live="polite">
+      <div aria-live="polite" aria-busy={fact === undefined}>
         {fact === undefined ? (
           <p>Finding a fun fact…</p>
         ) : fact ? (
@@ -68,7 +75,26 @@ export function CityTrivia({ city }: { city: WorldCity }) {
             )}
           </>
         ) : (
-          <p>No fun facts available for this city yet.</p>
+          <>
+            <p>
+              {failed
+                ? "Couldn't load a fun fact just now."
+                : "No fun facts for this city yet. Try another city."}
+            </p>
+            {fact === null && (
+              <button
+                type="button"
+                className="editorial-link trivia-retry"
+                onClick={() => {
+                  setFact(undefined);
+                  setFailed(false);
+                  setAttempt((value) => value + 1);
+                }}
+              >
+                Try again
+              </button>
+            )}
+          </>
         )}
       </div>
     </div>

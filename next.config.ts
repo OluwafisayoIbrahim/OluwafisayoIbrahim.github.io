@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Support the loopback address used by the local browser preview.
+  allowedDevOrigins: ["127.0.0.1"],
   output: "export",
   trailingSlash: true,
   images: {

@@ -5,7 +5,7 @@ export const homeEngineeringProjects: readonly EngineeringProject[] = [
   {
     kind: "engineering",
     slug: "c-caution",
-    title: "C-Caution Safety System",
+    title: "C-Caution Safety Sign",
     summary:
       "C-Caution is an Arduino-based safety-sign project with a sequenced LED display. The project combines circuit design, microcontroller programming, prototyping, and iterative testing. Its repository documents the circuit, firmware, and verification tools.",
     technologies: ["Embedded systems"],

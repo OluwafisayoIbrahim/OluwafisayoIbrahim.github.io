@@ -16,10 +16,6 @@ export function ResearchCard({ research }: { research: ResearchProject }) {
           Explore research <span aria-hidden="true">↗</span>
         </Link>
       </div>
-      <aside className="research-note">
-        <p className="editorial-label">{research.sections[0]?.title}</p>
-        <p>{research.sections[0]?.paragraphs[0]}</p>
-      </aside>
     </article>
   );
 }

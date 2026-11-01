@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CCautionPreview } from "@/components/home/c-caution-preview";
 export const metadata: Metadata = {
-  title: "C-Caution Safety System",
+  title: "C-Caution Safety Sign",
   description:
     "An undergraduate embedded-systems project and interactive LED sequence preview.",
 };
@@ -19,7 +19,7 @@ export default function CCautionPage() {
           Educational project / Embedded systems
         </p>
         <h1 className="editorial-heading home-section-title">
-          C-Caution Safety System
+          C-Caution Safety Sign
         </h1>
         <p className="home-section-intro">
           An undergraduate project combining circuit design, Arduino

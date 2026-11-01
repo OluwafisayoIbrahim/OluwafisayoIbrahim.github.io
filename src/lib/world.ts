@@ -1,4 +1,9 @@
-import type { WorldCity, WorldManifest } from "@/types/world";
+import type {
+  WorldCity,
+  WorldManifest,
+  WorldCountry,
+  WorldContinent,
+} from "@/types/world";
 const cache = new Map<string, WorldCity[]>();
 export async function getCountryCities(
   code: string,
@@ -28,4 +33,19 @@ export function timezoneLocation(manifest: WorldManifest, zone: string) {
     (value) => canonical(value) === canonical(zone),
   );
   return match ? manifest.zones[match] : undefined;
+}
+
+// Geographic display labels are separate from the IANA timezone used by the clock.
+// The seven-continent model groups Oceania under the requested "Australia" label.
+export function cityContinent(
+  country: WorldCountry,
+  city: WorldCity,
+): WorldContinent {
+  if (country.code === "RU" && city.zone.startsWith("Asia/")) return "Asia";
+  if (country.code === "ES" && city.zone === "Atlantic/Canary") return "Africa";
+  if (country.code === "PT" && city.zone === "Atlantic/Madeira")
+    return "Africa";
+  if (country.code === "US" && city.zone === "Pacific/Honolulu")
+    return "Australia";
+  return country.continent;
 }

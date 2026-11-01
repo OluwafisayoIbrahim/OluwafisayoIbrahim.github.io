@@ -2,30 +2,88 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useId, useRef, useState } from "react";
+import { Menu, X } from "lucide-react";
 import { navigation } from "@/config/navigation";
 
 export function Navbar() {
   const pathname = usePathname().replace(/\/+$/, "") || "/";
 
+  const [open, setOpen] = useState(false);
+  const menuId = useId();
+  const navRef = useRef<HTMLElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const closeOutside = (event: PointerEvent) => {
+      if (event.target instanceof Node && !navRef.current?.contains(event.target)) setOpen(false);
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const background = [...document.querySelectorAll<HTMLElement>("main, .site-footer")].map(element => ({ element, inert: element.inert }));
+    background.forEach(({ element }) => { element.inert = true; });
+    const desktop = window.matchMedia("(min-width: 641px)");
+    const closeOnDesktop = () => { if (desktop.matches) setOpen(false); };
+    document.addEventListener("pointerdown", closeOutside);
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      background.forEach(({ element, inert }) => { element.inert = inert; });
+      document.removeEventListener("pointerdown", closeOutside);
+      desktop.removeEventListener("change", closeOnDesktop);
+    };
+  }, [open]);
+
   return (
     <header className="block w-full" id="top">
+      <div className="site-nav-backdrop" data-open={open} aria-hidden="true" />
       <nav
-        className="mx-auto flex min-h-22 w-[calc(100%-3rem)] max-w-295 items-center justify-between gap-8 border-b border-divider max-[640px]:w-[calc(100%-2.5rem)] max-[640px]:min-h-[4.5rem] max-[640px]:flex-col max-[640px]:items-start max-[640px]:justify-center max-[640px]:gap-4 max-[640px]:py-4"
+        className="site-navigation"
+        ref={navRef}
+        onKeyDown={(event) => {
+          if (event.key === "Tab" && open) {
+            const items = navRef.current?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])");
+            const first = items?.[0];
+            const last = items?.[items.length - 1];
+            if (event.shiftKey && document.activeElement === first) {
+              event.preventDefault(); last?.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+              event.preventDefault(); first?.focus();
+            }
+          }
+          if (event.key === "Escape" && open) {
+            setOpen(false);
+            toggleRef.current?.focus();
+          }
+        }}
         aria-label="Main navigation"
       >
         <Link
-          className="font-display text-[2rem] font-normal tracking-[-0.07em] text-[#000000] no-underline"
+          className="site-mark site-nav-brand"
+          onClick={() => setOpen(false)}
           href="/"
           aria-label="Oluwafisayo Ibrahim home"
         >
           OI<span>.</span>
         </Link>
-        <div className="flex min-w-0 flex-wrap items-center justify-end gap-x-6 gap-y-3 max-[640px]:w-full max-[640px]:justify-start max-[640px]:gap-x-5">
+        <button
+          className="site-nav-toggle"
+          ref={toggleRef}
+          type="button"
+          aria-label={open ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={open}
+          aria-controls={menuId}
+          onClick={() => setOpen(value => !value)}
+        >
+          {open ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
+        </button>
+        <div id={menuId} className="site-nav-links" data-open={open}>
           {navigation.map((item) => {
             if (item.href.startsWith("https://")) {
               return (
                 <a
-                  className="nav-link min-w-0 whitespace-nowrap text-[14px] max-[640px]:text-[0.72rem]"
+                  className="nav-link"
+                  onClick={() => setOpen(false)}
                   href={item.href}
                   key={item.href}
                 >
@@ -41,7 +99,8 @@ export function Navbar() {
             return (
               <Link
                 aria-current={isActive ? "page" : undefined}
-                className="nav-link min-w-0 whitespace-nowrap text-[14px] max-[640px]:text-[0.72rem]"
+                className="nav-link"
+                  onClick={() => setOpen(false)}
                 href={item.href === "/" ? "/#top" : item.href}
                 key={item.href}
                 onNavigate={(event) => {
@@ -50,7 +109,7 @@ export function Navbar() {
                     if (window.location.hash) {
                       window.history.pushState(null, "", "/");
                     }
-                    window.scrollTo({ top: 0, left: 0 });
+                    requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0 }));
                     return;
                   }
                   const [targetPath, targetId] = item.href.split("#");
@@ -64,7 +123,7 @@ export function Navbar() {
                   if (window.location.hash !== `#${targetId}`) {
                     window.history.pushState(null, "", item.href);
                   }
-                  section.scrollIntoView({ block: "start" });
+                  requestAnimationFrame(() => section.scrollIntoView({ block: "start" }));
                 }}
               >
                 {item.label}

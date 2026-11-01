@@ -17,6 +17,12 @@ export const researchInterests: readonly ResearchInterest[] = [
 export const researchProjects: readonly ResearchProject[] = [
   {
     slug: "solar-ann-matlab",
+    figure: {
+      src: "/images/research/matlab-network-horizontal.png",
+      alt: "MATLAB network diagram arranged from left to right: six inputs, ten hidden neurons, and one output",
+      caption: "",
+      aspectRatio: "2160 / 728",
+    },
     title: "Solar Power Prediction Using Artificial Neural Networks",
     summary:
       "An undergraduate research project involving solar-panel power output, using field measurements and a feedforward neural network built in MATLAB.",
@@ -74,29 +80,26 @@ export const researchProjects: readonly ResearchProject[] = [
   },
   {
     slug: "solar-python-reevaluation",
-    title: "Solar Power Prediction in Python",
+    figure: { src: "/images/research/solar-python-results.png", alt: "Measured versus predicted solar power for the tuned weather-only ANN", caption: "Track B · measured versus predicted power using weather inputs." },
+    title: "Solar Power Prediction: Python Reimplementation",
     summary:
-      "A Python research project modelling solar-panel output with machine learning, comparing electrical and weather-based inputs through reproducible experiments and an interactive prediction app.",
+      "A Python reimplementation of my undergraduate research project on solar power prediction, extending the neural-network experiments across scikit-learn, TensorFlow and PyTorch, with an interactive Streamlit app.",
     topics: ["Independent research", "Machine learning", "Solar energy"],
     tools: [
       "Python",
-      "pandas",
-      "NumPy",
+      "Jupyter Notebook",
       "scikit-learn",
       "TensorFlow / Keras",
       "PyTorch",
-      "Matplotlib",
       "Streamlit",
-      "pytest",
-      "GitHub Actions",
     ],
     sections: [
       {
         id: "python-data",
-        title: "The prediction problem",
+        title: "Rebuilding the research in Python",
         paragraphs: [
-          "This project models how a solar panel's power output changes under measured operating conditions. It uses 189 observations collected across 21 measurement days, with irradiance, temperature, humidity, current, voltage and power recorded at regular daytime intervals.",
-          "Two input configurations answer different practical questions. The electrical-input configuration uses irradiance, current, voltage, temperature and humidity. The weather-only configuration uses irradiance, temperature, humidity and hour of day, allowing power to be estimated without measuring current or voltage. Both estimate output under observed conditions; neither is a forecast of future weather.",
+          "The Python implementation uses the original field measurements collected at Olabisi Onabanjo University: 189 readings across 21 days. The work brings data preparation, model training, validation and prediction into reusable modules, with saved results that can be explored through the live demo.",
+          "The experiments use two sets of inputs. One combines irradiance, temperature and humidity with current and voltage; the other uses irradiance, temperature, humidity and hour of day. Keeping these experiments separate shows how the available measurements affect power estimates. The weather-based models estimate output from measured conditions, rather than predicting future weather.",
         ],
       },
       {
@@ -150,13 +153,14 @@ export const researchProjects: readonly ResearchProject[] = [
   },
   {
     slug: "duplicate-bug-report-retrieval",
+    figure: { src: "/images/research/bug-report-datasets.png", alt: "Histogram comparing issue text lengths in IssueDupesLite and Eclipse Platform", caption: "Dataset exploration · issue text lengths in IssueDupesLite and Eclipse Platform." },
     title: "Duplicate Bug Report Detection",
     summary:
       "An ongoing NLP project that ranks earlier bug reports by relevance, helping developers find reports that may describe the same underlying issue.",
     topics: ["Work in progress", "NLP", "Software engineering"],
     tools: [
       "Python",
-      "Jupyter",
+      "Jupyter Notebook",
       "TF-IDF",
       "Sentence-BERT",
       "Cosine similarity",

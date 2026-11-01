@@ -3,7 +3,7 @@ import { CityTrivia } from "@/components/home/city-trivia";
 
 import { useEffect, useRef, useState } from "react";
 import { WorldGlobe } from "@/components/home/world-globe";
-import { getCountryCities, timezoneLocation } from "@/lib/world";
+import { getCountryCities, timezoneLocation, cityContinent } from "@/lib/world";
 import type { WorldCity, WorldManifest } from "@/types/world";
 
 export function WorldHello() {
@@ -23,7 +23,7 @@ export function WorldHello() {
     const token = ++request.current;
     async function initialise() {
       try {
-        const response = await fetch("/world/manifest.json", {
+        const response = await fetch("/world/manifest.json?v=2", {
           signal: controller.signal,
         });
         if (!response.ok) throw new Error("Locations could not be loaded.");
@@ -156,9 +156,13 @@ export function WorldHello() {
             </h3>
             <p className="hello-country-name">{country?.name}</p>
             <p className="hello-clock">
-              <span>{time}</span>
-              <span aria-hidden="true">·</span>
-              <span>{city?.zone ?? "Local time"}</span>
+              <time dateTime={now?.toISOString()}>{time}</time>
+              {" · "}
+              <span>
+                {city && country
+                  ? `${cityContinent(country, city)}/${city.name.replace(/\s+/g, "_")}`
+                  : "Local time"}
+              </span>
             </p>
             {city && <CityTrivia key={city.id} city={city} />}
             {!busy && country && !cities.length && !error && (

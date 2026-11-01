@@ -30,7 +30,7 @@ export function ProjectsPage() {
             id="caution-project-title"
             className="editorial-heading projects-index-project-title"
           >
-            C-Caution Safety System
+            C-Caution Safety Sign
           </h2>
           <p className="research-summary">
             A microcontroller-controlled LED safety sign with a red chasing
@@ -57,7 +57,7 @@ export function ProjectsPage() {
             A workplace learning platform, an electric-mobility service, and an
             EV charging application: LUQA, RYDe, and MetroPay address different
             tasks, each with its own users and connected workflows. Read what
-            the products do and how I contribute to them.
+            the products do and how their workflows fit together.
           </p>
           <ProjectTools tools={softwareTools} />
           <Link
